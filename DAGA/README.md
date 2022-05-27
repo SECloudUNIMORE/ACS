@@ -7,7 +7,7 @@ Each folder contains a ```README.md``` with additional documentation.
 ### [dataset](dataset)
 Clean and infected dataset used for the training and the experimental evaluation of the DAGA algorithm.
 
-### [implementatitons](implementattions)
+### [implementations](implementations)
 Implementations of the DAGA detection algorithm for embedded microcontrollers.
 
 ## Credits

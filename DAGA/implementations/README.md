@@ -1,4 +1,4 @@
-# DAGA Dataset
+# DAGA Implementations
 This folder contains the implementations of DAGA. Each implementation is released in a separate folder:
  - ```BinaryLookup```: Implementation of DAGA based on the binary lookup algorithm;
  - ```Hashmap```: Implementation of DAGA based on the Hashmap data structure;
