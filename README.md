@@ -3,7 +3,7 @@
 This repository contains all the research output of the SECloud research group [(website)](https://secloud.ing.unimore.it) in the field of Automotive Cyber Security.
 
 ## Research Projects
- - [DAGA: DAGA: Detecting Attacks to in-vehicle networks via n-Gram Analysis](tree/master/DAGA)
+ - [DAGA: DAGA: Detecting Attacks to in-vehicle networks via n-Gram Analysis](DAGA)
 
 ## Members
  - [Prof. Mirco Marchetti](https://secloud.ing.unimore.it/people/marchetti)
