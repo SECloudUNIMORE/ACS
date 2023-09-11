@@ -11,7 +11,7 @@ To perform our simulation we use the VM offered by [VEINS](https://veins.car2x.o
 To test our framework we provide the output of one simulation which is stored in a compressed archive named `simulation_output.tgz`.\
 The data obtained from the simulation must respect the following constrains:
 
-- each antenna have to store the eavesdropped messages in a comma separated values (CSV) file, whose name can be defined in the python script (line 36). The default is `rsu[{antenna_num}]bsm.csv`.
+- each antenna have to store the eavesdropped messages in a comma separated values (CSV) file, whose name can be defined in the python file named `tracker.py` at line 36. The default is `rsu[{antenna_num}]bsm.csv`.
 - the resulting csv output include some mandatory columns, while others are optional.
     
     **Mandatory**:

@@ -22,7 +22,6 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-# --- STATIC VARIABLE --- 
 # NUMBER OF EAVESDROPPING ANTENNA 
 ANTENNA_NUM = 3
 # MEAN DISTANCE BETWEEN TWO CONSECUTIVE BSM
@@ -77,7 +76,6 @@ def mean_pseudonyms_change(path):
     logging.info(f'{bcolors.RED}PSEUDONYMS PER VEHICLE (MEAN): {round((pseudonyms_num/vehicles_num), 2)}{bcolors.RESET}')
     return data, pseudonyms
 
-# LABELING THE DATASET CHECKING FOR ENTRY AND EXITS EVENT
 def pseudonym_change_events(dataframe, pseudonyms):
     """This function perform the following actions:
         - Labeling process of the dataset retrieving the entry and exit events of the pseudonyms.
@@ -166,9 +164,9 @@ def heading_to_angle(x_heading, y_heading):
         True if the value1 is between value2 - tolerance and value2 + tolerance
         
     """
-    det = -y_heading                                # determinant
-    dot = x_heading                                 # dot product between [x1, y1] and [x2, y2]
-    angle = math.atan2(det, dot) * 180 / math.pi;   # atan2(y, x) or atan2(sin, cos);
+    det = -y_heading
+    dot = x_heading
+    angle = math.atan2(det, dot) * 180 / math.pi
 
     if x_heading >= 0 and y_heading > 0:
         angle = 360 + angle
@@ -267,7 +265,6 @@ def local_change(dataframe, pseudonyms, beacon_interval, results, dimensions=Fal
             raise ValueError
     
     for p in tqdm(pseudonyms.tolist()):
-        # RECUPERO EVENTO DI USCITA PER LO PSEUDONIMO P
         last_seen = dataframe.loc[(dataframe['pseudonym'] == p) & (dataframe['event'] == 'x')]
 
         if last_seen.empty:
@@ -275,46 +272,35 @@ def local_change(dataframe, pseudonyms, beacon_interval, results, dimensions=Fal
         
         assert len(last_seen) == 1, f'MULTIPLE EXITS EVENTS FOR PSEUDONYM: {p}, {last_seen}'
         
-        # RECUPERO LE INFORMAZIONI DELL'ULTIMO AVVISTAMENTO
         last_seen = last_seen.iloc[0]
         last_seen_time = last_seen['t']
         # last_seen_rsu = int(last_seen['rsu'])
 
-        # APPLICO PRIMO FILTRO -> CERCO NUOVI EVENTI DI ENTRATA CON NUOVI PSEUDONIMI 
-        # AL TEMPO t > last_seen_time e < last_seen_time + beacon_freq + time_tolerance (per essere sicuro)
         possible_match = dataframe.loc[(dataframe['event'] == 'e') | (dataframe['event'] == 'ex')]
         time_interval = possible_match['t'].between(last_seen_time, last_seen_time + beacon_interval + time_tolerance)
         possible_match = possible_match[time_interval]
         
-        # AGGIUNGO FILTRO ANCHE SULLA DIMENSIONE DEL VEICOLO
         if dimensions:
             last_seen_width = last_seen['width']
             last_seen_length = last_seen['length']
             possible_match = possible_match.loc[(possible_match['length'] == last_seen_length) & (possible_match['width'] == last_seen_width)]
         
-        # FILTRO SULLA POSIZIONE
         filter_pos_x = possible_match['pos.x'].between(last_seen['pos.x'] - POS_TOLERANCE, last_seen['pos.x'] + POS_TOLERANCE)
         filter_pos_y = possible_match['pos.y'].between(last_seen['pos.y'] - POS_TOLERANCE, last_seen['pos.y'] + POS_TOLERANCE)
         possible_match = possible_match[(filter_pos_x) & (filter_pos_y)]
 
-        # FILTRO SU HEADING
         heading_filter = possible_match['angle'].between(last_seen['angle'] - ANGLE_TOLERANCE, last_seen['angle'] + ANGLE_TOLERANCE)
         possible_match = possible_match[heading_filter]
         
-        # FILTRO SU RSU
         # possible_match = possible_match.loc[dataframe['rsu'] == last_seen_rsu]
 
-        # print(len(possible_match))
         if not possible_match.empty:
-            # CALCOLO LE DISTANZE CON LA POSIZIONE DELL'ULTIMO AVVISTAMENTO
             last_pos = np.array((last_seen['pos.x'], last_seen['pos.y'], 0))
             possible_match['distance'] = possible_match.apply(lambda row: np.linalg.norm(last_pos - np.array((row['pos.x'], row['pos.y'], 0))), axis=1)
             possible_match = possible_match.sort_values(by='distance')
 
             for k in range(len(possible_match)):
                 current = possible_match.iloc[k]
-
-                # AGGIUNGO FP-CHECK CON LA VELOCITà -> speed*time ~ euclidean_dist 
                 if near(last_seen['speed'] * (current['t'] - last_seen_time), current['distance'], 2):
                     matched_idx = possible_match.iloc[k:k+1].index.values.astype(int)[0]
                     dataframe, to_remove_pseudonyms = possible_candidate_found(dataframe, matched_idx, last_seen, results, pseudonyms, to_remove_pseudonyms)
@@ -327,7 +313,7 @@ def local_change(dataframe, pseudonyms, beacon_interval, results, dimensions=Fal
     pseudonyms = np.delete(pseudonyms, to_remove_pseudonyms.astype(int))
     return pseudonyms
 
-# CALCOLO PREC, RECALL, F1 PER CAMBI LOCALI 
+
 def local_results(results, fn):
     """Calculate and show the Precision, Recall and F1-Score metrics.
 
@@ -456,7 +442,6 @@ def main(base_folder, freq, policy, dimensions):
     
     precision, recall, f1_score = analyze(path, freq, dimensions)
 
-    # OPTIONAL CSV SAVE FOR METRICS EVALUATIONS OR PLOTTING
     results_file = 'results.csv'
     if os.stat(results_file).st_size == 0:
         head = True
@@ -465,7 +450,7 @@ def main(base_folder, freq, policy, dimensions):
 
     with open(results_file, 'a') as f:
         if head:
-            f.write('fq,pc,prec,recall,f1_score')
+            f.write('fq,pc,prec,recall,f1_score\n')
         f.write(f'{freq}, {policy}, {precision}, {recall}, {f1_score}\n')
         
 
