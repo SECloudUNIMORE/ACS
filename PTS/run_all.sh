@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -eu
+
 declare -A PCS=( [1]="Periodical" [2]="Disposable" [3]="Distance" [4]="Random" [5]="Car2Car")
 
 for fq in {1..1}
