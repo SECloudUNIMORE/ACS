@@ -4,3 +4,6 @@
 [submodule "PTF"]
 	path = PTF
 	url = https://github.com/GGZ8/PTF.git
+[submodule "radar"]
+	path = radar
+	url = https://git.wl.ing.unimore.it/ggzoccoli/radar.git
