@@ -6,6 +6,7 @@ This repository contains all the research output of the SECloud research group [
  - [DAGA: Detecting Attacks to in-vehicle networks via n-Gram Analysis](DAGA)
  - [Are VANETs pseudonyms effective? An experimental evaluation of pseudonym tracking in adversarial scenario](https://github.com/GGZ8/PTS)
  - [Driving Awareness: How Targeted Interventions Influence Privacy Perceptions in Vehicle Infotainment Systems](https://github.com/frfaenza/vtc_25-spring)
+ - [RADAR: a Radio-based Analytics for Dynamic Association and Recognition of pseudonyms in VANETs](https://git.wl.ing.unimore.it/ggzoccoli/radar)
 
 ## Members
  - [Prof. Mirco Marchetti](https://secloud.ing.unimore.it/people/marchetti)
