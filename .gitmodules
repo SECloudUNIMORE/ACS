@@ -1,9 +1,12 @@
-[submodule "Driving_Awareness"]
-	path = Driving_Awareness
-	url = https://github.com/frfaenza/vtc_25-spring.git
 [submodule "PTF"]
 	path = PTF
 	url = https://github.com/GGZ8/PTF.git
 [submodule "radar"]
 	path = radar
 	url = https://git.wl.ing.unimore.it/ggzoccoli/radar.git
+[submodule "PTS"]
+	path = PTS
+	url = https://github.com/GGZ8/PTS
+[submodule "TWYSF"]
+	path = TWYSF
+	url = https://github.com/frfaenza/vtc_25-fall.git
