@@ -1,6 +1,3 @@
-[submodule "PTS"]
-	path = PTS
-	url = https://github.com/GGZ8/PTS
 [submodule "Driving_Awareness"]
 	path = Driving_Awareness
 	url = https://github.com/frfaenza/vtc_25-spring.git
